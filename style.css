@@ -63,12 +63,28 @@ body{
     margin-bottom: 0.8rem;
     box-shadow: inset 0 0 0.15rem 0.15rem rgb(28, 28, 28);
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
     box-sizing: border-box;
-    padding: 1rem;
-    color: #9EA2A1FF;
+    padding: 0.5rem 1rem;
+    color: rgb(116, 133, 129);
     font-size: 3rem;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#screenUp{
+    display: flex;
+    justify-content: space-between;
+}
+#screenNumber{
+    font-size: 3rem;
+    align-self: flex-end;
+}
+#screenHistory{
+    font-size: 1rem;
+}
+#rndCounter{
+    font-size: 1rem;
 }
 #lowerPart{
     display: grid;
@@ -90,6 +106,64 @@ body{
     cursor: pointer;
     user-select: none;
 }
+.calcButton:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0.35rem 0.4rem rgba(0,0,0,0.4);
+  background-color: #4a4c55; 
+}
+
+.calcButton:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 0.1rem 0 0 #111;
+}
 #CButton{
     background-color: #784534FF;
 }
+
+#modulo{
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.calcNumber{
+    background-color: rgb(55, 55, 61);
+}
+
+#pi{
+    background-color: #27282CFF;
+}
+
+#equals{
+    grid-column: 5;  
+    grid-row: 4 / 6;
+    background-color: #784534FF;
+}
+#rounder{
+    font-size: 1.5rem;
+    font-style: italic;    
+}
+#percentage{
+    background-color: #27282CFF;
+}
+/* #rounder{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+    justify-content: space-between;
+    align-items: stretch; */
+    /* border: none;
+    box-shadow: none; */
+/* }
+#rounderButtons{
+    display: flex;
+    padding: 0 0.5rem;
+    margin: 0;
+    align-content: space-around;
+    justify-content: space-between;
+    
+}
+.arrow{
+        
+        
+        font-size: 1rem;
+} */
