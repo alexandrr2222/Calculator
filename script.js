@@ -1,3 +1,6 @@
+function render(){
+    
+}
 function add(x, y){
     return Number(x) + Number(y);
 }
@@ -19,8 +22,11 @@ function exponent(x, y){
 function modulo(x, y){
     return x % y;
 }
+function roundNumbers(x){
+    return Number.parseFloat(x).toFixed(state.roundingLevel)
+}
 function removeZeros(result){
-    for(let i = 0; rounder >= i; i++){
+    for(let i = 0; state.roundingLevel >= i; i++){
         let checker = result[result.length - 1];
         if(checker === "."){
             result = result.slice(0, result.length - 1);
@@ -40,45 +46,55 @@ function operate(opr, numA, numB){
         if(add(numA, numB) % 1 === 0){
             return add(numA, numB);
         }
-        else return Number.parseFloat(add(numA, numB)).toFixed(rounder)
+        else return roundNumbers(add(numA, numB))
     }
     else if(opr==="-"){
         if(subtract(numA, numB) % 1 === 0){
             return subtract(numA, numB);
         }
-        else return Number.parseFloat(subtract(numA, numB)).toFixed(rounder)
+        else return roundNumbers(subtract(numA, numB))
     }
     else if(opr==="*"){
         if(multiply(numA, numB) % 1 === 0){
             return multiply(numA, numB);
         }
-        else return Number.parseFloat(multiply(numA, numB)).toFixed(rounder)
+        else return roundNumbers(multiply(numA, numB))
     }
     else if(opr==="÷"){
         if(divide(numA, numB) % 1 === 0){
             return divide(numA, numB);
         }
-        else return Number.parseFloat(divide(numA, numB)).toFixed(rounder)
+        else return roundNumbers(divide(numA, numB))
     }
     else if(opr==="√"){
         if(squareRoot(numB) % 1 === 0){
             return squareRoot(numB);
         }
-        else return Number.parseFloat(squareRoot(numB)).toFixed(rounder)
+        else return roundNumbers(squareRoot(numB))
     }
     else if(opr==="^"){
         if(exponent(numA, numB) % 1 === 0){
             return exponent(numA, numB);
         }
-        else return Number.parseFloat(exponent(numA, numB)).toFixed(rounder)
+        else return roundNumbers(exponent(numA, numB))
     }
     else if(opr==="mod"){
         if(modulo(numA, numB) % 1 === 0){
             return modulo(numA, numB);
         }
-        else return Number.parseFloat(modulo(numA, numB)).toFixed(rounder)
+        else return roundNumbers(modulo(numA, numB))
     }
 }
+
+
+const state = {
+    firstOperand: "",
+    secondOperand: "",
+    operator: "",
+    unaryMode: false,
+    roundingLevel: 2,
+}
+
 
 const calcNumbers = document.querySelectorAll(".calcNumber");
 const calcOperators = document.querySelectorAll(".calcOperator");
@@ -95,230 +111,225 @@ const rndCounter = document.querySelector("#rndCounter");
 const screenHistory = document.querySelector("#screenHistory");
 
 
+window.addEventListener("keydown", (e) => {
 
+});
 
 backspace.addEventListener("click", () => {
-    numberA = String(numberA);
-    let totalLength = numberA.length + operator.length + numberB.length;
-    if(numberA.length > 1 && operator === "" && numberB === ""){
-        numberA = numberA.slice(0, (numberA.length - 1));
-        screenNumber.textContent = numberA;
+    state.firstOperand = String(state.firstOperand);
+    let totalLength = state.firstOperand.length + state.operator.length + state.secondOperand.length;
+    if(state.firstOperand.length > 1 && state.operator === "" && state.secondOperand === ""){
+        state.firstOperand = state.firstOperand.slice(0, (state.firstOperand.length - 1));
+        screenNumber.textContent = state.firstOperand;
     }
-    else if(operator !== "" && numberB === ""){
-        operator = "";
-        singular = false;
-        screenNumber.textContent = numberA;
+    else if(state.operator !== "" && state.secondOperand === ""){
+        state.operator = "";
+        state.unaryMode = false;
+        screenNumber.textContent = state.firstOperand;
     }
-    else if(numberA !== "" && operator !== "" && numberB !== ""){
-        numberB = numberB.slice(0, (numberB.length - 1));
-        screenNumber.textContent = numberA + operator + numberB;
+    else if(state.firstOperand !== "" && state.operator !== "" && state.secondOperand !== ""){
+        state.secondOperand = state.secondOperand.slice(0, (state.secondOperand.length - 1));
+        screenNumber.textContent = state.firstOperand + state.operator + state.secondOperand;
     }
     else if(totalLength === 1){
-        numberA = "";
+        state.firstOperand = "";
         screenNumber.textContent = 0;
     }
-}); 
+});
 percentage.addEventListener("click", () => {
-    numberA = String(numberA);
-    numberB = String(numberB);
-    if(!numberA.includes("%") && operator === ""){
-            numberA = numberA + "%"; 
-            screenNumber.textContent = numberA;            
+    state.firstOperand = String(state.firstOperand);
+    state.secondOperand = String(state.secondOperand);
+    if(!state.firstOperand.includes("%") && state.operator === ""){
+            state.firstOperand = state.firstOperand + "%"; 
+            screenNumber.textContent = state.firstOperand;            
     }
-    else if(operator !== "" && !numberB.includes("%")){
-            numberB = numberB + "%"; 
-            screenNumber.textContent = numberA + operator + numberB;            
+    else if(state.operator !== "" && !state.secondOperand.includes("%")){
+            state.secondOperand = state.secondOperand + "%"; 
+            screenNumber.textContent = state.firstOperand + state.operator + state.secondOperand;            
     }    
 }); 
 rnd.addEventListener("click", () => {
-    rounder = rounder + 1;
-    zeroCounter += "0"
-    if(rounder === 6){
-        rounder = 0;
-        zeroCounter = "."
+    state.roundingLevel += 1;
+    if(state.roundingLevel === 6){
+        state.roundingLevel = 0;
         rndCounter.textContent = "rnd: 0";
     }
-    else rndCounter.textContent = `rnd: 0${zeroCounter}`
-
+    else rndCounter.textContent = "rnd: 0.".padEnd((state.roundingLevel + 7), "0")
 });
 sng.addEventListener("click", () => {
-    singular = true;
+    state.unaryMode = true;
 });
 decimal.addEventListener("click", () => {
-    numberA = String(numberA);
-    numberB = String(numberB);
-    if(!numberA.includes(".") && operator === ""){
-        if(numberA === "" && !singular){
-            numberA = "0.";
-            screenNumber.textContent = numberA;
+    state.firstOperand = String(state.firstOperand);
+    state.secondOperand = String(state.secondOperand);
+    if(!state.firstOperand.includes(".") && state.operator === ""){
+        if(state.firstOperand === "" && !state.unaryMode){
+            state.firstOperand = "0.";
+            screenNumber.textContent = state.firstOperand;
         }
         else{
-            numberA = numberA + "."; 
-            screenNumber.textContent = numberA;            
+            state.firstOperand = state.firstOperand + "."; 
+            screenNumber.textContent = state.firstOperand;            
         }
 
     }
-    else if(!numberB.includes(".") && operator !== ""){
-        if(numberB === ""){
-            numberB = "0.";
-            screenNumber.textContent = numberA + operator + numberB;
+    else if(!state.secondOperand.includes(".") && state.operator !== ""){
+        if(state.secondOperand === ""){
+            state.secondOperand = "0.";
+            screenNumber.textContent = state.firstOperand + state.operator + state.secondOperand;
         }
         else{
-            numberB = numberB + "."; 
-            screenNumber.textContent = numberA + operator + numberB;            
+            state.secondOperand = state.secondOperand + "."; 
+            screenNumber.textContent = state.firstOperand + state.operator + state.secondOperand;            
         }
     }
 });  
 calcNumbers.forEach((number) => {
     number.addEventListener("click", () => {
-    numberA = String(numberA);
-    numberB = String(numberB);
+    state.firstOperand = String(state.firstOperand);
+    state.secondOperand = String(state.secondOperand);
         if(number.textContent === "π"){
-            piNum = String(Math.PI.toFixed(rounder));
+            piNum = String(Math.PI.toFixed(state.roundingLevel));
             NumberFromKey = piNum;
         }
         else{
             NumberFromKey = number.textContent;
         }
 
-        if(operator === ""){
-            if(numberA !== "" && !numberA.includes("%")){
-                numberA = numberA + NumberFromKey; 
-                screenNumber.textContent = numberA;
+        if(state.operator === ""){
+            if(state.firstOperand !== "" && !state.firstOperand.includes("%")){
+                state.firstOperand = state.firstOperand + NumberFromKey; 
+                screenNumber.textContent = state.firstOperand;
             }
-            else if(!numberA.includes("%")){
+            else if(!state.firstOperand.includes("%")){
                 screenNumber.style.fontSize = "3rem";
-                numberA = NumberFromKey; 
-                screenNumber.textContent = numberA;
+                state.firstOperand = NumberFromKey; 
+                screenNumber.textContent = state.firstOperand;
             }
         }
         else{
-            if(numberB !== "" && !numberB.includes("%")){
-                numberB = numberB + NumberFromKey; 
-                screenNumber.textContent = numberA + operator + numberB;
+            if(state.secondOperand !== "" && !state.secondOperand.includes("%")){
+                state.secondOperand = state.secondOperand + NumberFromKey; 
+                screenNumber.textContent = state.firstOperand + state.operator + state.secondOperand;
             }
-            else if(!numberB.includes("%")){
-                numberB = NumberFromKey;
-                screenNumber.textContent = numberA + operator + numberB;
+            else if(!state.secondOperand.includes("%")){
+                state.secondOperand = NumberFromKey;
+                screenNumber.textContent = state.firstOperand + state.operator + state.secondOperand;
             }
         }
     });    
 });
 calcOperators.forEach((opr) => {
     opr.addEventListener("click", () => {
-        if(numberB !== ""){
-            screenHistory.textContent = numberA + operator + numberB;
-            numberA = operate(operator, numberA, numberB);
-            if(numberA === "NaN"){
+        if(state.secondOperand !== ""){
+            screenHistory.textContent = state.firstOperand + state.operator + state.secondOperand;
+            state.firstOperand = operate(state.operator, state.firstOperand, state.secondOperand);
+            if(state.firstOperand === "NaN"){
                 screenNumber.style.fontSize = "1.4rem";
                 screenNumber.textContent = "Error: malformed expression";
-                numberA = "";
-                numberB = "";
-                operator = "";
+                state.firstOperand = "";
+                state.secondOperand = "";
+                state.operator = "";
             }
             else{
-            operator = `${opr.textContent}`;
-            screenNumber.textContent = numberA + operator;
-            numberB = ""; 
+            state.operator = `${opr.textContent}`;
+            screenNumber.textContent = state.firstOperand + state.operator;
+            state.secondOperand = ""; 
             }  
         }
         else{
-        operator = `${opr.textContent}`;
-        screenNumber.textContent = numberA + operator;
+        state.operator = `${opr.textContent}`;
+        screenNumber.textContent = state.firstOperand + state.operator;
         }
     });    
 });
 equals.addEventListener("click", () => {
-    screenHistory.textContent = numberA + operator + numberB;
-    numberA = String(numberA);
-    numberB = String(numberB);
-    let zeroA = numberA[0]
-    let zeroB = numberB[0]
-    if(numberA.includes("%")){
-        numberA = (numberA.slice(0, numberA.length - 1))/100;
+    screenHistory.textContent = state.firstOperand + state.operator + state.secondOperand;
+    state.firstOperand = String(state.firstOperand);
+    state.secondOperand = String(state.secondOperand);
+    let zeroA = state.firstOperand[0]
+    let zeroB = state.secondOperand[0]
+    if(state.firstOperand.includes("%")){
+        state.firstOperand = (state.firstOperand.slice(0, state.firstOperand.length - 1))/100;
     }
-    if(numberB.includes("%")){
-        numberB = (numberB.slice(0, numberB.length - 1))/100;
+    if(state.secondOperand.includes("%")){
+        state.secondOperand = (state.secondOperand.slice(0, state.secondOperand.length - 1))/100;
     }
 
-    if(!singular && (numberA === "" || numberB === "" || operator === "" || zeroA === "%" || zeroB === "%")){
-        if(numberA !== "" && zeroA !== "%" && zeroB !== "%"){
-            numberA = Number.parseFloat(numberA).toFixed(rounder);
-            screenNumber.textContent = numberA;
+    if(!state.unaryMode && (state.firstOperand === "" || state.secondOperand === "" || state.operator === "" || zeroA === "%" || zeroB === "%")){
+        if(state.firstOperand !== "" && zeroA !== "%" && zeroB !== "%"){
+            state.firstOperand = roundNumbers(state.firstOperand)
+            screenNumber.textContent = state.firstOperand;
         }
         else{
         screenNumber.style.fontSize = "1.4rem";
         screenNumber.textContent = "Error: malformed expression";
-        numberA = "";
-        numberB = "";
-        operator = "";
+        state.firstOperand = "";
+        state.secondOperand = "";
+        state.operator = "";
         }
     }
-    else if(singular && zeroB === "%"){
+    else if(state.unaryMode && zeroB === "%"){
         screenNumber.style.fontSize = "1.4rem";
         screenNumber.textContent = "Error: malformed expression";
-        numberA = "";
-        numberB = "";
-        operator = "";        
+        state.firstOperand = "";
+        state.secondOperand = "";
+        state.operator = "";        
     }
-    else if(singular && numberA === "" && numberB !== ""){
-        numberA = operate(operator, numberA, numberB);
-        numberA = removeZeros(numberA);
-        screenNumber.textContent = numberA;
-        operator = "";
-        numberB = "";
-        singular = false;
+    else if(state.unaryMode && state.firstOperand === "" && state.secondOperand !== ""){
+        state.firstOperand = operate(state.operator, state.firstOperand, state.secondOperand);
+        state.firstOperand = removeZeros(state.firstOperand);
+        screenNumber.textContent = state.firstOperand;
+        state.operator = "";
+        state.secondOperand = "";
+        state.unaryMode = false;
     }
     else{
-        if(operator === "÷" && numberB === "0"){
+        if(state.operator === "÷" && state.secondOperand === "0"){
             screenNumber.style.fontSize = "1.4rem";
             screenNumber.textContent = "Error: division by 0 is not possible";
-            numberA = "";
-            numberB = "";
-            operator = "";
+            state.firstOperand = "";
+            state.secondOperand = "";
+            state.operator = "";
         }
-        else if(operator === "mod" && numberB === "0"){
+        else if(state.operator === "mod" && state.secondOperand === "0"){
             screenNumber.style.fontSize = "1.4rem";
             screenNumber.textContent = "Error: modulo by 0 is not possible";
-            numberA = "";
-            numberB = "";
-            operator = "";
+            state.firstOperand = "";
+            state.secondOperand = "";
+            state.operator = "";
         }
-        else if(singular){
-            numberB = Number.parseFloat(squareRoot(numberB)).toFixed(rounder);
-            numberA = operate("*", numberA, numberB);
-            numberA = removeZeros(numberA);
-            screenNumber.textContent = numberA;
-            operator = "";
-            numberB = "";
-            singular = false;
+        else if(state.unaryMode){
+            state.secondOperand = roundNumbers(squareRoot(state.secondOperand))
+            state.firstOperand = operate("*", state.firstOperand, state.secondOperand);
+            state.firstOperand = removeZeros(state.firstOperand);
+            screenNumber.textContent = state.firstOperand;
+            state.operator = "";
+            state.secondOperand = "";
+            state.unaryMode = false;
         }
         else{
-            numberA = operate(operator, numberA, numberB);
-            numberA = removeZeros(numberA);
-            screenNumber.textContent = numberA;
-            operator = "";
-            numberB = "";
+            state.firstOperand = operate(state.operator, state.firstOperand, state.secondOperand);
+            state.firstOperand = removeZeros(state.firstOperand);
+            screenNumber.textContent = state.firstOperand;
+            state.operator = "";
+            state.secondOperand = "";
         }
     }
 });
 cleaner.addEventListener("click", () => {
     screenNumber.style.fontSize = "3rem";
-    numberA = "";
-    numberB = "";
-    operator = "";
-    singular = false;
+    state.firstOperand = "";
+    state.secondOperand = "";
+    state.operator = "";
+    state.unaryMode = false;
     screenNumber.textContent = 0;
+    state.roundingLevel = 2;
+    rndCounter.textContent = "rnd: 0.00";
 });  
 
-let rounder = 2;
 let NumberFromKey = "";
-let singular = false;
-let numberA = "";
-let numberB = "";
-let operator = "";
-let piNum = String(Math.PI.toFixed(rounder));
-let zeroCounter = ".00"
+let piNum = String(Math.PI.toFixed(state.roundingLevel));
 // pi overflow
 // overflowing numbers n font size scroller
 // keyboard support, sound
