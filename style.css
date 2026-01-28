@@ -6,6 +6,8 @@ body{
     height: 100vh;
 }
 #outerCalcFrame{
+    transform: scale(1.5);
+    transform-origin: center;
     justify-content: center;
     align-items: center;
     display: flex;
