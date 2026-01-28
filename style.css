@@ -36,14 +36,15 @@ body{
     justify-content: flex-end;
 }
 #calcName{
+    font-family: "Orbitron", sans-serif;
     align-self: flex-end;
     margin-top: 0.5rem;
-    font-weight: 600;
-    font-size: 1.2rem;
-    margin-right: 1rem;
+    font-weight: 300;
+    font-size: 0.75rem;
     color: #9EA2A1FF;
     border-radius: 0.4rem;
-    margin-right: 3rem;
+    margin-right: 1rem;
+    user-select: none;
 }
 #nameUnderline{
     align-self: center;
@@ -51,7 +52,6 @@ body{
     background-color: #9EA2A1FF;
     width: 95%;
     margin-bottom: 1.6rem;
-
 }
 #screen{
     align-self: center;
@@ -85,6 +85,7 @@ body{
 }
 #rndCounter{
     font-size: 1rem;
+    user-select: none;
 }
 #lowerPart{
     display: grid;
@@ -105,34 +106,34 @@ body{
     box-shadow: 0 0.15rem 0 0 rgb(28, 28, 28);
     cursor: pointer;
     user-select: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
 }
 .calcButton:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 0.35rem 0.4rem rgba(0,0,0,0.4);
-  background-color: #4a4c55; 
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0.35rem 0.4rem rgba(0,0,0,0.4);
+    background-color: #4a4c55; 
 }
-
 .calcButton:active {
-  transform: translateY(2px) scale(0.98);
-  box-shadow: 0 0.1rem 0 0 #111;
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 0.1rem 0 0 #111;
+}
+.effect{
+    transform: translateY(-2px) scale(0.984);
+    box-shadow: 0 0.35rem 0.4rem rgba(0,0,0,0.4);
 }
 #CButton{
     background-color: #784534FF;
 }
-
 #modulo{
     font-size: 1.5rem;
     font-style: italic;
 }
-
 .calcNumber{
     background-color: rgb(55, 55, 61);
 }
-
 #pi{
     background-color: #27282CFF;
 }
-
 #equals{
     grid-column: 5;  
     grid-row: 4 / 6;
@@ -144,4 +145,13 @@ body{
 }
 #percentage{
     background-color: #27282CFF;
+}
+.supText {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+.supY {
+    vertical-align: super;
+    font-size: 0.65em;
 }

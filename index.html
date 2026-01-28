@@ -6,12 +6,13 @@
     <title>Document</title>
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="outerCalcFrame">
         <div id="calcFrame">
             <div id="upperPart">
-                <div id="calcName">Alexator 0.9</div>
+                <div id="calcName">ALEXATOR 9000</div>
                 <div id="nameUnderline"></div>
                 <div id="screen">
                     <div id="screenUp">
@@ -22,32 +23,33 @@
                 </div>
             </div>
             <div id="lowerPart">
-                <div class="calcButton" id="CButton">C</div>
-                <div class="calcButton" id="backspace">⌫</div>
-                <div class="calcButton" id="rounder">rnd</div>
-                <div class="calcButton calcOperator" id="modulo">mod</div>
-                <div class="calcButton calcNumber" id="pi">π</div>
-                <div class="calcButton calcNumber">1</div>
-                <div class="calcButton calcNumber">2</div>
-                <div class="calcButton calcNumber">3</div>
-                <div class="calcButton calcOperator">÷</div>
-                <div class="calcButton calcOperator sng">√</div>
-                <div class="calcButton calcNumber">4</div>
-                <div class="calcButton calcNumber">5</div>
-                <div class="calcButton calcNumber">6</div>
-                <div class="calcButton calcOperator">*</div>
-                <div class="calcButton calcOperator">^</div>
-                <div class="calcButton calcNumber">7</div>
-                <div class="calcButton calcNumber">8</div>
-                <div class="calcButton calcNumber">9</div>
-                <div class="calcButton calcOperator">-</div>
-                <div class="calcButton calcNumber">0</div>
-                <div class="calcButton" id="decimalButton">.</div>
-                <div class="calcButton" id="percentage">%</div>
-                <div class="calcButton calcOperator">+</div>
-                <div class="calcButton" id="equals">=</div>
+                <div data-key="c" class="calcButton" id="CButton">C</div>
+                <div data-key="Backspace" class="calcButton" id="backspace">⌫</div>
+                <div data-key="r" class="calcButton" id="rounder" title="rounding">rnd</div>
+                <div data-key="m" class="calcButton calcOperator" id="modulo" title="modulo">mod</div>
+                <div data-key="p" class="calcButton calcNumber" id="pi">π</div>
+                <div data-key="1" class="calcButton calcNumber">1</div>
+                <div data-key="2" class="calcButton calcNumber">2</div>
+                <div data-key="3" class="calcButton calcNumber">3</div>
+                <div data-key="/" class="calcButton calcOperator">÷</div>
+                <div data-key="s" class="calcButton calcOperator sng">√</div>
+                <div data-key="4" class="calcButton calcNumber">4</div>
+                <div data-key="5" class="calcButton calcNumber">5</div>
+                <div data-key="6" class="calcButton calcNumber">6</div>
+                <div data-key="*" class="calcButton calcOperator">×</div>
+                <div data-key="e" class="calcButton calcOperator" id="exponent"><span class="supText">X<span class="supY">y</span></span></div>
+                <div data-key="7" class="calcButton calcNumber">7</div>
+                <div data-key="8" class="calcButton calcNumber">8</div>
+                <div data-key="9" class="calcButton calcNumber">9</div>
+                <div data-key="-" class="calcButton calcOperator">-</div>
+                <div data-key="0" class="calcButton calcNumber">0</div>
+                <div data-key="." class="calcButton" id="decimalButton">.</div>
+                <div data-key="%" class="calcButton" id="percentage">%</div>
+                <div data-key="+" class="calcButton calcOperator">+</div>
+                <div data-key="=" class="calcButton" id="equals">=</div>
             </div>
         </div>
     </div>
+    <audio id="clickSound" src="./clickSound.wav"></audio>
 </body>
 </html>
