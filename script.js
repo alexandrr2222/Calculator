@@ -497,3 +497,4 @@ let piNum = String(Math.PI.toFixed(state.roundingLevel));
 // bad overflower checker
 // if you click one button too fast it breaks animation
 // animation and sound toggle button
+// hover not work on pi and %
